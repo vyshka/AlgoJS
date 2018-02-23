@@ -7,7 +7,6 @@ btn.addEventListener("click", function(){
     });
     array = quickSort(array, 0, array.length - 1);
     var output = document.getElementById('output');
-    console.log(array);
     var outputText = array.map(String);
 
     output.value = outputText;
@@ -17,8 +16,6 @@ function quickSort(arr, left, right){
     var len = arr.length, 
     pivot,
     partitionIndex;
- 
- 
    if(left < right){
      pivot = right;
      partitionIndex = partition(arr, pivot, left, right);
