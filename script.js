@@ -1,6 +1,6 @@
 var array;
 var posArray;
-var Chart;
+var myChart;
 var oldArr = [];
 var arrayOfArrs = [];
 var arrayOfLabels = [];
@@ -8,13 +8,11 @@ var arrayOfIndexes = [];
 var arrindex = 0;
 document.getElementById('sort').addEventListener("click", function(){
     var input = document.getElementById("input").value;  
-
-
-
+    
     array = input.split(' ').map(function(item) {
         return parseInt(item, 10);
     });
-    draw(Chart);
+    draw();
     array = quickSort(array, 0, array.length - 1);
     var output = document.getElementById('output');
     var outputText = array.map(String);
@@ -23,17 +21,17 @@ document.getElementById('sort').addEventListener("click", function(){
         var i = (arrayOfIndexes[arrindex])[0];
         var j = (arrayOfIndexes[arrindex])[1];
         
-        Chart.data.datasets[0].backgroundColor = [];
+        myChart.data.datasets[0].backgroundColor = [];
 
-        Chart.data.datasets[0].backgroundColor[i] = "red";
-        Chart.data.datasets[0].backgroundColor[j] = "red";
-        Chart.data.datasets[0].data = arrayOfArrs[arrindex];
-        Chart.data.labels = arrayOfLabels[arrindex];
-        Chart.update();
+        myChart.data.datasets[0].backgroundColor[i] = "red";
+        myChart.data.datasets[0].backgroundColor[j] = "red";
+        myChart.data.datasets[0].data = arrayOfArrs[arrindex];
+        myChart.data.labels = arrayOfLabels[arrindex];
+        myChart.update();
         arrindex++;
         if(arrindex > arrayOfArrs.length - 1) {
-            Chart.data.datasets[0].backgroundColor = [];
-            Chart.update();
+            myChart.data.datasets[0].backgroundColor = [];
+            myChart.update();
             clearTimeout(timer);
         }
     }, 2000);
@@ -117,6 +115,9 @@ function draw() {
         scales:
         {
             yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                },
                 display: false
             }]
         },
@@ -124,11 +125,14 @@ function draw() {
             enabled: false
         }
       };
-      Chart = new Chart(ctx, {
-        type: 'bar',
-        data: Data,
-        options: chartOptions
-    })
+      if(myChart == undefined) {
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: Data,
+            options: chartOptions
+        })
+      }
+      
 }
 
 
